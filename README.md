@@ -1,46 +1,107 @@
-# Getting Started with Create React App
+# Инструкция по запуску локального проекта
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Данный проект представляет собой мобильную версию веб-приложения новостного сайта, использующего API New York Times для
+получения данных. Проект реализован с использованием React, Redux и TypeScript. Для корректной работы с API был написан
+собственный бэкенд на Node.js, который решает проблему с CORS.
 
-## Available Scripts
+## Технические требования
 
-In the project directory, you can run:
+- React + Redux
+- TypeScript
+- Мобильная верстка
+- Возможность листать список новостей до любой доступной даты
+- Подгрузка новых новостей каждые 30 секунд
+- Переход на сайт New York Times при клике на новость
 
-### `npm start`
+## Зависимости
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Проект использует следующие основные зависимости:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- `react`, `react-dom` — для создания пользовательского интерфейса.
+- `redux`, `redux-saga`, `@reduxjs/toolkit` — для управления состоянием приложения.
+- `axios` — для выполнения HTTP-запросов.
+- `express`, `cors` — для реализации бэкенда и решения проблемы CORS.
+- `styled-components` — для стилизации компонентов.
+- `react-infinite-scroll-component` — для реализации бесконечной прокрутки новостей.
 
-### `npm test`
+Полный список зависимостей можно найти в файле `package.json`.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Установка и запуск
 
-### `npm run build`
+1. **Клонируйте репозиторий:**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+   ```bash
+   git clone <ваш-репозиторий>
+   cd <ваш-репозиторий>
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. **Установите зависимости:**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   ```bash
+   npm install
+   ```
 
-### `npm run eject`
+3. **Запустите бэкенд:**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+   Бэкенд написан на Node.js с использованием Express и CORS. Он служит прокси для запросов к API New York Times.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ```bash
+   node server.js
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+   Бэкенд будет запущен на порту `3003`.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+4. **Запустите фронтенд:**
 
-## Learn More
+   ```bash
+   npm start
+   ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   Фронтенд будет запущен на порту `3000` (по умолчанию). Откройте браузер и перейдите по адресу
+   `http://localhost:3000`.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Структура проекта
+
+- **`src/`** — основная директория с исходным кодом фронтенда.
+    - **`components/`** — React-компоненты.
+    - **`store/`** — Redux-хранилище, включая срезы (slices) и саги (sagas).
+    - **`types/`** — TypeScript-типы.
+    - **`api/`** — модули для работы с API.
+    - **`App.tsx`** — корневой компонент приложения.
+    - **`index.tsx`** — точка входа в приложение.
+
+- **`server.js`** — файл с бэкенд-логикой для работы с API New York Times.
+
+## Особенности реализации
+
+### Бэкенд для работы с CORS
+
+Для решения проблемы с CORS был написан собственный бэкенд на Node.js. Он выступает в роли прокси-сервера, который
+делает запросы к API New York Times и возвращает данные клиенту. Бэкенд запускается на порту `3003` и обрабатывает
+запросы по адресу `/api/nyt/:year/:month`.
+
+### Redux и Redux Saga
+
+Для управления состоянием приложения используется Redux Toolkit и Redux Saga. В проекте реализованы следующие сценарии:
+
+- Загрузка новостей по году и месяцу.
+- Сортировка новостей по дате.
+- Группировка новостей по дате.
+- Подгрузка новых новостей каждые 30 секунд.
+- Бесконечная прокрутка новостей.
+
+### Бесконечная прокрутка
+
+Для реализации бесконечной прокрутки используется библиотека `react-infinite-scroll-component`. При достижении конца
+списка новостей происходит подгрузка следующих 10 новостей.
+
+### Подгрузка новых новостей
+
+Каждые 30 секунд происходит проверка на наличие новых новостей. Если новые новости найдены, они добавляются в начало
+списка.
+
+## Заключение
+
+Проект представляет собой полноценное мобильное веб-приложение для просмотра новостей с использованием API New York
+Times. Для решения проблемы с CORS был реализован собственный бэкенд на Node.js. Управление состоянием приложения
+осуществляется с помощью Redux и Redux Saga.
