@@ -1,19 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
-import newSlice from './newsSlice';
-import { watchNewsSaga } from './newsSaga';
+import newsSlice from './newsSlice';
+import rootSaga from './saga';
 
 const sagaMiddleware = createSagaMiddleware();
 
 const store = configureStore({
   reducer: {
-    news: newSlice,
+    news: newsSlice,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(sagaMiddleware),
 });
 
-sagaMiddleware.run(watchNewsSaga);
+sagaMiddleware.run(rootSaga);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

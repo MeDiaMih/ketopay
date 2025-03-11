@@ -9,6 +9,7 @@ import Menu from './components/Menu';
 import Footer from './components/Footer';
 import styled from 'styled-components';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { getCurrentYearAndMonth } from './utils/getCurrentDate';
 
 const AppContainer = styled.div`
     position: relative;
@@ -23,9 +24,7 @@ const App: FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   useEffect(() => {
-    const currentDate = new Date();
-    const year = String(currentDate.getFullYear());
-    const month = String(currentDate.getMonth() + 1);
+    const { year, month } = getCurrentYearAndMonth();
     dispatch(resetNews());
     dispatch(setNewsStart({ year, month }));
   }, [dispatch]);

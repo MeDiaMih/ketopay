@@ -31,8 +31,8 @@
 1. **Клонируйте репозиторий:**
 
    ```bash
-   git clone <ваш-репозиторий>
-   cd <ваш-репозиторий>
+   git clone https://github.com/MeDiaMih/ketopay
+   cd ketopay
    ```
 
 2. **Установите зависимости:**

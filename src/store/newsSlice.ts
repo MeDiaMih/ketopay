@@ -71,9 +71,16 @@ const newsSlice = createSlice({
       state.groupedNews = {};
       state.hasMore = true;
     },
+    
+    addNewNews(state, action: PayloadAction<NewsItem[]>) {
+      // Добавляем новые новости в начало списка
+      state.allNews = sortNewsByDate([...action.payload, ...state.allNews]);
+      state.displayedNews = state.allNews.slice(0, state.displayedNews.length);
+      state.groupedNews = groupNewsByDate(state.displayedNews);
+    },
   },
 });
 
-export const { setNewsStart, setNewsSuccess, setNewsFail, resetNews, loadMoreNews } =
+export const { setNewsStart, setNewsSuccess, setNewsFail, resetNews, loadMoreNews, addNewNews } =
   newsSlice.actions;
 export default newsSlice.reducer;
